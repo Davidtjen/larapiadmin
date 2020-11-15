@@ -6,8 +6,6 @@ use App\Http\Requests\CreateProductRequest;
 use App\Http\Resources\ProductResource;
 use App\Product;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Str;
 use Symfony\Component\HttpFoundation\Response;
 
 class ProductController extends Controller
