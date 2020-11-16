@@ -27,6 +27,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property-read mixed $total
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\OrderItem[] $orderItems
  * @property-read int|null $order_items_count
+ * @property-read mixed $name
  */
 class Order extends Model
 {
@@ -40,5 +41,10 @@ class Order extends Model
         return $this->orderItems->sum(function (OrderItem $item) {
             return $item->price * $item->quantity;
         });
+    }
+
+    public function getNameAttribute()
+    {
+        return $this->first_name . ' '. $this->last_name;
     }
 }

@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Resources\OrderResource;
 use App\Order;
-use Illuminate\Http\Response;
+
 
 class OrderController extends Controller
 {
@@ -39,10 +39,15 @@ class OrderController extends Controller
 
             // Body
             foreach ($orders as $order) {
-                fputcsv($file, [$order->id, $order->name, $order->email, $order->product_title, $order->price, $order->quantity]);
+                fputcsv($file, [$order->id, $order->name, $order->email, '', '', '']);
+                foreach ($order->orderItems as $orderItem) {
+                    fputcsv($file, ['', '', '', $orderItem->product_title, $orderItem->price, $orderItem->quantity]);
+                }
             }
+
+            fclose($file);
         };
 
-        return Response::stream($callback, 200, $headers);
+        return response()->stream($callback, 200, $headers);
     }
 }

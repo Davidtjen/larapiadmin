@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+
+use App\Http\Resources\RoleResource;
 use App\Role;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -15,7 +17,8 @@ class RoleController extends Controller
      */
     public function index()
     {
-        return Role::all();
+        $roles = Role::all();
+        return RoleResource::collection($roles);
     }
 
     /**
@@ -28,7 +31,7 @@ class RoleController extends Controller
     {
         $role = Role::create($request->only('name'));
 
-        return response($role, Response::HTTP_CREATED);
+        return response(new RoleResource($role), Response::HTTP_CREATED);
     }
 
     /**
@@ -39,7 +42,7 @@ class RoleController extends Controller
      */
     public function show($id)
     {
-        return Role::findOrFail($id);
+        return new RoleResource(Role::find($id));
     }
 
     /**
@@ -54,7 +57,7 @@ class RoleController extends Controller
         $role = Role::findOrFail($id);
         $role->update($request->only('name'));
 
-        return response($role, Response::HTTP_ACCEPTED);
+        return response(new RoleResource($role), Response::HTTP_ACCEPTED);
     }
 
     /**

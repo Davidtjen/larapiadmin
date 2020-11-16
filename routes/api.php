@@ -1,7 +1,5 @@
 <?php
 
-use Illuminate\Http\Request;
-
 //Route::middleware('auth:api')->get('/user', function (Request $request) {
 //    return $request->user();
 //});
@@ -15,9 +13,11 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::put('users/info', 'UserController@updateInfo');
     Route::put('users/password', 'UserController@updatePassword');
     Route::post('upload', 'ImageController@upload');
+    Route::get('export', 'OrderController@export');
 
     Route::apiResource('users', 'UserController');
     Route::apiResource('roles', 'RoleController');
     Route::apiResource('products', 'ProductController');
     Route::apiResource('orders', 'OrderController')->only('index', 'show');
+
 });
