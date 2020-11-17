@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Resources\OrderResource;
 use App\Order;
+use Response;
 
 
 class OrderController extends Controller
@@ -48,6 +49,6 @@ class OrderController extends Controller
             fclose($file);
         };
 
-        return response()->stream($callback, 200, $headers);
+        return Response::stream($callback, 200, $headers);
     }
 }
