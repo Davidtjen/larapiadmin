@@ -1,0 +1,42 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Tjen Admin API Documentation",
+        "description": "Tjen Admin API Description",
+        "contact": {
+            "email": "etiennelobato@gmail.com"
+        },
+        "version": "1.0.0"
+    },
+    "servers": [
+        {
+            "url": "http://larapiadmin.test/api",
+            "description": "Admin API server"
+        }
+    ],
+    "paths": {
+        "/users": {
+            "get": {
+                "operationId": "App\\Http\\Controllers\\UserController::index",
+                "responses": {
+                    "200": {
+                        "description": "User Collection"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        }
+    },
+    "components": {
+        "securitySchemes": {
+            "bearerAuth": {
+                "type": "http",
+                "scheme": "bearer"
+            }
+        }
+    }
+}

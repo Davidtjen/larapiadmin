@@ -15,6 +15,15 @@ use Symfony\Component\HttpFoundation\Response;
 
 class UserController extends Controller
 {
+    /**
+     * @OA\Get(path="/users",
+     * security={{ "bearerAuth":{} }},      
+     *      @OA\Response(response=200,
+     *          description="User Collection"
+     *       )
+     *     )
+     */
+
     public function index()
     {
         Gate::authorize('view', 'users');
@@ -38,8 +47,8 @@ class UserController extends Controller
         // No password because the admin will create user
         // and afterwards the user will be able to change it
         $user = User::create($request->only('first_name', 'last_name', 'email', 'role_id') + [
-                'password' => Hash::make(123),
-            ]);
+            'password' => Hash::make(123),
+        ]);
         return response(new UserResource($user), Response::HTTP_CREATED);
     }
 
