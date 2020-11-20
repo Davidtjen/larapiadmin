@@ -16,9 +16,9 @@ class UserCreateRequest extends FormRequest
      * @OA\Property(
      *      title="first_name",
      *  )
-     * 
+     *
      * @var string
-     * 
+     *
      */
     public $first_name;
 
@@ -26,9 +26,9 @@ class UserCreateRequest extends FormRequest
      * @OA\Property(
      *      title="last_name",
      *  )
-     * 
+     *
      * @var string
-     * 
+     *
      */
     public $last_name;
 
@@ -36,9 +36,9 @@ class UserCreateRequest extends FormRequest
      * @OA\Property(
      *      title="email",
      *  )
-     * 
+     *
      * @var string
-     * 
+     *
      */
     public $email;
 
@@ -46,9 +46,9 @@ class UserCreateRequest extends FormRequest
      * @OA\Property(
      *      title="role_id",
      *  )
-     * 
+     *
      * @var int
-     * 
+     *
      */
     public $role_id;
 

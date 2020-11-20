@@ -33,7 +33,7 @@ class ProductController extends Controller
 
         $product = Product::create($request->only('title', 'description', 'image', 'price'));
 
-        return new ProductResource($product, Response::HTTP_CREATED);
+        return response(new ProductResource($product), Response::HTTP_CREATED);
     }
 
     public function update(Request $request, $id)
@@ -43,7 +43,7 @@ class ProductController extends Controller
         $product = Product::find($id);
         $product->update($request->only('title', 'description', 'image', 'price'));
 
-        return new ProductResource($product, Response::HTTP_ACCEPTED);
+        return response(new ProductResource($product), Response::HTTP_ACCEPTED);
     }
 
     public function destroy($id)
