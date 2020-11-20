@@ -18,9 +18,68 @@
         "/users": {
             "get": {
                 "operationId": "App\\Http\\Controllers\\UserController::index",
+                "parameters": [
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "Pagination page",
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "User Collection"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "post": {
+                "operationId": "App\\Http\\Controllers\\UserController::store",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/UserCreateRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "User"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/users/{id}": {
+            "get": {
+                "operationId": "App\\Http\\Controllers\\UserController::show",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "User ID",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "User"
                     }
                 },
                 "security": [
@@ -32,6 +91,31 @@
         }
     },
     "components": {
+        "schemas": {
+            "UserCreateRequest": {
+                "title": "Store User request",
+                "description": "Store User request body data",
+                "properties": {
+                    "first_name": {
+                        "title": "first_name",
+                        "type": "string"
+                    },
+                    "last_name": {
+                        "title": "last_name",
+                        "type": "string"
+                    },
+                    "email": {
+                        "title": "email",
+                        "type": "string"
+                    },
+                    "role_id": {
+                        "title": "role_id",
+                        "type": "integer"
+                    }
+                },
+                "type": "object"
+            }
+        },
         "securitySchemes": {
             "bearerAuth": {
                 "type": "http",

@@ -17,11 +17,20 @@ class UserController extends Controller
 {
     /**
      * @OA\Get(path="/users",
-     * security={{ "bearerAuth":{} }},      
-     *      @OA\Response(response=200,
-     *          description="User Collection"
-     *       )
-     *     )
+     *  security={{ "bearerAuth":{} }},      
+     *  @OA\Response(
+     *      response=200,
+     *      description="User Collection"
+     *  ),
+     *  @OA\Parameter(
+     *      name="page",
+     *      description="Pagination page",
+     *      in="query",
+     *      @OA\Schema(
+     *          type="integer"
+     *      ),
+     *  ),
+     * )
      */
 
     public function index()
@@ -32,23 +41,60 @@ class UserController extends Controller
         return UserResource::collection($users);
     }
 
+    /**
+     * @OA\Get(path="/users/{id}",
+     *  security={{ "bearerAuth":{} }},      
+     *  @OA\Response(
+     *      response=200,
+     *      description="User"
+     *  ),
+     *  @OA\Parameter(
+     *      name="id",
+     *      description="User ID",
+     *      in="path",
+     *      required=true,
+     *      @OA\Schema(
+     *          type="integer"
+     *      ),
+     *  ),
+     * )
+     */
     public function show($id)
     {
         Gate::authorize('view', 'users');
 
         $user = User::find($id);
+
         return new UserResource($user);
     }
 
+    /**
+     * @OA\Post(
+     *  path="/users",
+     *  security={{ "bearerAuth":{} }},      
+     *      @OA\Response(
+     *          response=200,
+     *          description="User"
+     *      ),
+     *      @OA\RequestBody(
+     *          required=true,
+     *          @OA\JsonContent(
+     *              ref="#/components/schemas/UserCreateRequest"
+     *          )
+     *      )
+     *  )
+     */
     public function store(UserCreateRequest $request)
     {
         Gate::authorize('edit', 'users');
 
         // No password because the admin will create user
         // and afterwards the user will be able to change it
-        $user = User::create($request->only('first_name', 'last_name', 'email', 'role_id') + [
-            'password' => Hash::make(123),
-        ]);
+        $user = User::create(
+            $request->only('first_name', 'last_name', 'email', 'role_id')
+                + ['password' => Hash::make(123)]
+        );
+
         return response(new UserResource($user), Response::HTTP_CREATED);
     }
 
